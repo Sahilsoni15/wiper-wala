@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2>Invoice for Booking #{{ booking['id'] }}</h2>
+
+  <p><strong>Customer Name:</strong> {{ user['username'] }}</p>
+  <p><strong>Service:</strong> {{ booking['flat_type'] }}</p>
+  <p><strong>Date:</strong> {{ booking['date'] }}</p>
+  <p><strong>Status:</strong> {{ booking['status'] }}</p>
+
+  <hr>
+
+  <h5>Payment Details</h5>
+  <p><strong>Amount:</strong> ₹{{ '2999' if booking['flat_type'] == '1 BHK' else '3699' if booking['flat_type'] == '2 BHK' else '4999' }}</p>
+  <p><strong>Payment Method:</strong> UPI</p>
+  <p><strong>UPI ID:</strong> {{ upi_id }}</p>
+
+  <hr>
+
+  <p>Thank you for choosing Wiper Wala!</p>
+</div>
+{% endblock %}

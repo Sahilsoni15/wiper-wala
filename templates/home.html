@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center mt-5">
+  <h1>Welcome to Wiper Wala</h1>
+  <p>Your trusted home cleaning service</p>
+
+  {% if session.get('user_id') %}
+    <!-- Logged-in users see only Booking -->
+    <a href="{{ url_for('booking') }}" class="btn btn-lg btn-success px-4">Make a Booking</a>
+  {% else %}
+    <!-- Guests see register and login -->
+    <a href="{{ url_for('register') }}" class="btn btn-primary me-2">Register</a>
+    <a href="{{ url_for('login') }}" class="btn btn-outline-primary">Login</a>
+  {% endif %}
+</div>
+{% endblock %}

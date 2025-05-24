@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  .wiperpay-wrapper {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 25px 30px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .wiperpay-wrapper h3 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: bold;
+  }
+
+  .form-label {
+    font-weight: 600;
+  }
+
+  .form-control {
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  .pay-btn {
+    background-color: #2b7cff;
+    color: #fff;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+
+  .pay-btn:hover {
+    background-color: #1f65d1;
+  }
+</style>
+
+<div class="wiperpay-wrapper">
+  <h3>Pay with UPI</h3>
+
+  <form method="POST">
+    <p><strong>Service:</strong> {{ booking['flat_type'] }}</p>
+    <p><strong>Date:</strong> {{ booking['date'] }}</p>
+    <p><strong>Status:</strong> {{ booking['status'] }}</p>
+
+    <div class="mb-3">
+      <label class="form-label">Enter your UPI ID</label>
+      <input type="text" class="form-control" name="upi_id" placeholder="example@upi" required>
+    </div>
+
+    <button type="submit" class="pay-btn">Pay ₹{{ '2999' if booking['flat_type'] == '1 BHK' else '3699' if booking['flat_type'] == '2 BHK' else '4999' }}</button>
+  </form>
+</div>
+{% endblock %}
+
+<!-- Confirm Button triggers a modal or redirects -->
+<form method="POST" id="upiForm">
+  <button type="button" onclick="showUPIModal()" class="btn btn-success w-100">Pay with UPI</button>
+</form>
+
+<!-- UPI Confirmation Modal -->
+<div id="upiModal" style="display: none; position: fixed; top: 30%; left: 50%; transform: translate(-50%, -30%); background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 15px #aaa;">
+  <h4>Confirm UPI Payment</h4>
+  <p>Pay to: <strong>wiperwala@upi</strong></p>
+  <button onclick="confirmUPIPayment()" class="btn btn-success mt-3">Confirm</button>
+</div>
+
+<script>
+  function showUPIModal() {
+    document.getElementById('upiModal').style.display = 'block';
+  }
+
+  function confirmUPIPayment() {
+    document.getElementById('upiForm').submit();
+  }
+</script>

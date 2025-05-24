@@ -1,0 +1,152 @@
+/* Global Layout */
+body {
+  background: #f0f4f8;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar Styling */
+.navbar {
+  background-color: #007bff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-brand span {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.navbar-nav .nav-link {
+  font-weight: 500;
+  color: white !important;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ffdd57 !important;
+}
+
+/* Primary Buttons */
+.btn-primary {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.btn-primary:hover {
+  background-color: #003d7a;
+  border-color: #003d7a;
+}
+
+/* Success Buttons */
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+  border-color: #218838;
+}
+
+/* Footer Styling */
+footer {
+  background-color: #0056b3;
+  color: white;
+  padding: 15px 0;
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* Container Size */
+.container {
+  max-width: 960px;
+}
+
+/* Profile Cards and Booking List */
+.card {
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* List-group inside profile */
+.list-group-item {
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+/* Chat Support Floating Button */
+#chat-support-btn {
+  background-color: #0056b3;
+  color: white;
+  font-weight: 600;
+  padding: 12px 25px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 50px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  z-index: 9998;
+  border: none;
+}
+
+#chat-support-btn:hover {
+  background-color: #003d7a;
+}
+
+/* Chatbot Box Styling */
+#chatbotBox {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 300px;
+  height: 400px;
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px #aaa;
+  display: none;
+  z-index: 9999;
+  border-radius: 10px;
+}
+
+#chatbotBox header {
+  background: #007bff;
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* Invoice Page */
+.invoice-box {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin: 20px auto;
+  max-width: 700px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Booking Form */
+.booking-form .form-label {
+  font-weight: 600;
+}
+
+.booking-form .form-control {
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+}
+
+/* Alerts */
+.alert {
+  border-radius: 8px;
+}

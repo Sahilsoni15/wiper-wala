@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<h2>Admin Dashboard - Manage Bookings</h2>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>User ID</th>
+      <th>Flat Type</th>
+      <th>Date</th>
+      <th>Status</th>
+      <th>Cleaner</th>
+      <th>Assign Cleaner / Update Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for booking in bookings %}
+    <tr>
+      <td>{{ booking['id'] }}</td>
+      <td>{{ booking['user_id'] }}</td>
+      <td>{{ booking['flat_type'] }}</td>
+      <td>{{ booking['date'] }}</td>
+      <td>{{ booking['status'] }}</td>
+      <td>
+        {% if booking['cleaner_id'] %}
+          {{ booking['cleaner_id'] }}
+        {% else %}
+          Not assigned
+        {% endif %}
+      </td>
+      <td>
+        <form method="POST" class="d-flex gap-2">
+          <input type="hidden" name="booking_id" value="{{ booking['id'] }}" />
+          <select name="cleaner_id" class="form-select" style="width: 150px;">
+            <option value="None">No Cleaner</option>
+            {% for cleaner in cleaners %}
+              <option value="{{ cleaner['id'] }}" {% if booking['cleaner_id'] == cleaner['id'] %}selected{% endif %}>{{ cleaner['username'] }}</option>
+            {% endfor %}
+          </select>
+          <select name="status" class="form-select" style="width: 150px;">
+            <option value="Pending" {% if booking['status'] == 'Pending' %}selected{% endif %}>Pending</option>
+            <option value="Paid" {% if booking['status'] == 'Paid' %}selected{% endif %}>Paid</option>
+            <option value="Completed" {% if booking['status'] == 'Completed' %}selected{% endif %}>Completed</option>
+          </select>
+          <button type="submit" class="btn btn-primary btn-sm">Update</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<a href="{{ url_for('export') }}" class="btn btn-success">Export Data to Excel</a>
+{% endblock %}

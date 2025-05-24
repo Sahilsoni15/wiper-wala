@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Wiper Wala{% endblock %}</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" />
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: #f0f4f8;
+      color: #212529; /* Default text color */
+    }
+
+    main.main-content {
+      flex: 1;
+      padding-bottom: 100px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px 0;
+      background-color: #f8f9fa;
+      margin-top: 40px;
+    }
+
+    nav {
+      background-color: #007bff;
+    }
+
+    nav a.nav-link,
+    nav .navbar-brand {
+      color: white !important;
+    }
+
+    nav a.nav-link:hover {
+      color: #ffdd57 !important;
+    }
+
+    .navbar-brand img {
+      height: 40px;
+      margin-right: 8px;
+    }
+
+    #chat-support-btn {
+      background: #007bff;
+      color: white;
+      font-weight: bold;
+      border-radius: 50px;
+      padding: 12px 20px;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      border: none;
+      z-index: 9998;
+    }
+
+    #chatbotBox {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 300px;
+      height: 400px;
+      background: white;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 10px #aaa;
+      display: none;
+      z-index: 9999;
+      border-radius: 10px;
+    }
+
+    #chatbotBox header {
+      background: #007bff;
+      color: white;
+      padding: 10px;
+      font-weight: bold;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    #chatbotBox input[type="text"] {
+      width: 70%;
+      padding: 5px;
+      margin-right: 5px;
+    }
+
+    #chatbotBox button {
+      width: 25%;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="{{ url_for('home') }}">
+      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Wiper Wala Logo">
+      <span>Wiper Wala</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        {% if session.get('user_id') %}
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('profile') }}">Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Content -->
+<main class="main-content container my-4">
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        {% for message in messages %}
+          {{ message }}<br />
+        {% endfor %}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+
+<!-- Footer -->
+<footer>
+  <p>© 2025 Wiper Wala. All Rights Reserved.</p>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Chatbot (Only if logged in) -->
+{% if session.get('user_id') %}
+<div id="chatbotBox">
+  <header>
+    WiperBot
+    <button onclick="document.getElementById('chatbotBox').style.display='none'" style="float:right; background:none; border:none; color:white;">×</button>
+  </header>
+  <div id="chatBox" style="padding: 10px; height: 290px; overflow-y: auto;"></div>
+  <div style="padding: 10px;">
+    <input type="text" id="userMessage" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<button id="chat-support-btn" onclick="document.getElementById('chatbotBox').style.display='block'">
+  💬 Chat Support
+</button>
+
+<script>
+  async function sendMessage() {
+    const message = document.getElementById('userMessage').value;
+    if (!message.trim()) return;
+    const response = await fetch('/api/chatbot', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message })
+    });
+    const data = await response.json();
+    const chatBox = document.getElementById('chatBox');
+    chatBox.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
+    chatBox.innerHTML += `<p><strong>Bot:</strong> ${data.reply}</p>`;
+    document.getElementById('userMessage').value = '';
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+</script>
+{% endif %}
+
+</body>
+</html>

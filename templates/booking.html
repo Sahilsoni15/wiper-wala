@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Make a Booking{% endblock %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Book a Cleaning Service</h2>
+  <form method="POST" action="{{ url_for('booking') }}" class="shadow p-4 bg-white rounded">
+    <div class="mb-3">
+      <label for="flat_type" class="form-label">Select Flat Type</label>
+      <select class="form-select" id="flat_type" name="flat_type" required>
+        <option value="">-- Choose --</option>
+        <option value="1 BHK">1 BHK - ₹2,999</option>
+        <option value="2 BHK">2 BHK - ₹3,699</option>
+        <option value="3 BHK">3 BHK - ₹4,999</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="date" class="form-label">Booking Date</label>
+      <input type="date" class="form-control" id="date" name="date" required min="{{ min_date }}" max="{{ max_date }}">
+    </div>
+    <button type="submit" class="btn btn-success w-100">Book Now</button>
+  </form>
+</div>
+{% endblock %}

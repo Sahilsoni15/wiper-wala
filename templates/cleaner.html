@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Cleaner Panel{% endblock %}
+{% block content %}
+<h2>Cleaner Panel</h2>
+<h4>Pending Bookings</h4>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Booking ID</th>
+      <th>User ID</th>
+      <th>Flat Type</th>
+      <th>Date</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for b in bookings %}
+    <tr>
+      <td>{{ b['id'] }}</td>
+      <td>{{ b['user_id'] }}</td>
+      <td>{{ b['flat_type'] }}</td>
+      <td>{{ b['date'] }}</td>
+      <td>{{ b['status'] }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5" class="text-center">No pending bookings.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
